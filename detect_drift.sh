@@ -19,8 +19,24 @@ publish_metric() {
       --dimensions Resource=S3Bucket
 }
 
+# Function to ensure log stream exists
+ensure_log_stream_exists() {
+    aws logs describe-log-streams \
+      --region us-east-2 \
+      --log-group-name "/terraform/drift-detector" \
+      --log-stream-name-prefix "drift-logs" \
+      --query 'logStreams[0].logStreamName' \
+      --output text | grep -q "drift-logs" || \
+    aws logs create-log-stream \
+      --region us-east-2 \
+      --log-group-name "/terraform/drift-detector" \
+      --log-stream-name "drift-logs"
+}
+
+# Function to log drift status to CloudWatch Logs
 log_drift_status() {
     local message=$1
+    ensure_log_stream_exists
     aws logs put-log-events \
       --region us-east-2 \
       --log-group-name "/terraform/drift-detector" \
@@ -30,17 +46,17 @@ log_drift_status() {
 
 # Check the exit code to determine if there's drift
 if [ $EXITCODE -eq 0 ]; then
-  echo "No changes detected. Infrastructure is up-to-date."
-  publish_metric 0
-  log_drift_status "No drift detected at $TIMESTAMP"
+    echo "No changes detected. Infrastructure is up-to-date."
+    publish_metric 0
+    log_drift_status "No drift detected at $TIMESTAMP"
 elif [ $EXITCODE -eq 2 ]; then
-  echo "Changes detected:"
-  echo "$PLAN_OUTPUT"
-  publish_metric 1
-  log_drift_status "Drift detected at $TIMESTAMP"
+    echo "Changes detected:"
+    echo "$PLAN_OUTPUT"
+    publish_metric 1
+    log_drift_status "Drift detected at $TIMESTAMP"
 else
-  echo "Error running terraform plan:"
-  echo "$PLAN_OUTPUT"
-  log_drift_status "Error detecting drift at $TIMESTAMP"
-  exit 1
+    echo "Error running terraform plan:"
+    echo "$PLAN_OUTPUT"
+    log_drift_status "Error detecting drift at $TIMESTAMP"
+    exit 1
 fi
