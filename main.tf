@@ -1,3 +1,8 @@
+import {
+  to = aws_cloudwatch_log_group.drift_logs
+  id = "/terraform/drift-detector"
+}
+
 provider "aws" {
   region = "us-east-2"
 }
