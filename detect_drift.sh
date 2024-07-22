@@ -9,22 +9,21 @@ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 # Function to publish metric to CloudWatch
 publish_metric() {
-  local drift_status=$1
-  aws cloudwatch put-metric-data \
-    --namespace "TerraformDriftDetector" \
-    --metric-name "DriftStatus" \
-    --value "$drift_status" \
-    --timestamp "$TIMESTAMP" \
-    --dimensions Resource=S3Bucket
+    local drift_status=$1
+    aws cloudwatch put-metric-data \
+      --namespace "TerraformDriftDetector" \
+      --metric-name "DriftStatus" \
+      --value "$drift_status" \
+      --timestamp "$TIMESTAMP" \
+      --dimensions Resource=S3Bucket
 }
 
-# Function to log drift status to CloudWatch Logs
 log_drift_status() {
-  local message=$1
-  aws logs put-log-events \
-    --log-group-name "/terraform/drift-detector" \
-    --log-stream-name "drift-logs" \
-    --log-events timestamp=$(date +%s000),message="$message"
+    local message=$1
+    aws logs put-log-events \
+      --log-group-name "/terraform/drift-detector" \
+      --log-stream-name "drift-logs" \
+      --log-events timestamp=$(date +%s000),message="$message"
 }
 
 # Check the exit code to determine if there's drift
