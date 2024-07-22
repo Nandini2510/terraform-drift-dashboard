@@ -11,6 +11,7 @@ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 publish_metric() {
     local drift_status=$1
     aws cloudwatch put-metric-data \
+      --region us-east-2 \
       --namespace "TerraformDriftDetector" \
       --metric-name "DriftStatus" \
       --value "$drift_status" \
@@ -21,6 +22,7 @@ publish_metric() {
 log_drift_status() {
     local message=$1
     aws logs put-log-events \
+      --region us-east-2 \
       --log-group-name "/terraform/drift-detector" \
       --log-stream-name "drift-logs" \
       --log-events timestamp=$(date +%s000),message="$message"
