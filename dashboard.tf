@@ -16,7 +16,7 @@ resource "aws_cloudwatch_dashboard" "drift_dashboard" {
           ]
           view    = "timeSeries"
           stacked = false
-          region  = "us-west-2"
+          region  = "us-east-2"
           title   = "Terraform Drift Status"
           period  = 300
         }
