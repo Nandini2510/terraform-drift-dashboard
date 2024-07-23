@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-${random_string.suffix.result}"
+  name = "drift-alerts-sns-${random_string.topic_suffix.result}"
 }
 
 resource "aws_sns_topic_subscription" "email" {

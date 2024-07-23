@@ -25,6 +25,10 @@ resource "aws_s3_bucket_public_access_block" "test_bucket" {
   restrict_public_buckets = true
 }
 
+resource "aws_sns_topic" "drift_alerts" {
+  name = "drift-alerts-s3-${random_string.bucket_suffix.result}"
+}
+
 resource "aws_sns_topic_subscription" "email" {
   topic_arn = aws_sns_topic.drift_alerts.arn
   protocol  = "email"

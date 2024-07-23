@@ -12,6 +12,10 @@ resource "aws_cloudwatch_log_group" "test_log_group" {
   }
 }
 
+resource "aws_sns_topic" "drift_alerts" {
+  name = "drift-alerts-log-${random_string.log_group_suffix.result}"
+}
+
 resource "aws_sns_topic_subscription" "email" {
   topic_arn = aws_sns_topic.drift_alerts.arn
   protocol  = "email"
