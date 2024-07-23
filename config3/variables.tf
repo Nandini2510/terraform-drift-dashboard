@@ -15,3 +15,8 @@ variable "project_name" {
   type        = string
   default     = "TerraformDriftDetector"
 }
+
+variable "alert_email" {
+  description = "Email address for drift alerts"
+  type        = string
+}
