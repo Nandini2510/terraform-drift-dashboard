@@ -20,12 +20,24 @@ do
             --dimensions Resource=S3Bucket,Configuration="$CONFIG"
     }
 
+    ensure_log_stream_exists() {
+    aws logs describe-log-streams \
+        --log-group-name "/terraform/drift-detector" \
+        --log-stream-name-prefix "drift-logs" \
+        --query 'logStreams[0].logStreamName' \
+        --output text | grep -q "drift-logs" || \
+    aws logs create-log-stream \
+        --log-group-name "/terraform/drift-detector" \
+        --log-stream-name "drift-logs"
+}
+
     log_drift_status() {
+        local message=$1
+        ensure_log_stream_exists
         aws logs put-log-events \
-            --region us-east-2 \
             --log-group-name "/terraform/drift-detector" \
-            --log-stream-name "$CONFIG-drift-logs" \
-            --log-events timestamp=$(date +%s000),message="$1"
+            --log-stream-name "drift-logs" \
+            --log-events timestamp=$(date +%s000),message="$message"
     }
 
     if [ $EXITCODE -eq 0 ]; then

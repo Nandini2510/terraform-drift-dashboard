@@ -10,10 +10,10 @@ resource "aws_cloudwatch_dashboard" "drift_dashboard" {
         height = 6
         properties = {
           metrics = [
-            ["TerraformDriftDetector", "DriftStatus", "Configuration", "config1"],
-            ["TerraformDriftDetector", "DriftStatus", "Configuration", "config2"],
-            ["TerraformDriftDetector", "DriftStatus", "Configuration", "config3"]
-          ]
+        ["TerraformDriftDetector", "DriftStatus", "Configuration", "config1"],
+        ["TerraformDriftDetector", "DriftStatus", "Configuration", "config2"],
+        ["TerraformDriftDetector", "DriftStatus", "Configuration", "config3"]
+      ]
           view    = "timeSeries"
           stacked = false
           region  = "us-east-2"

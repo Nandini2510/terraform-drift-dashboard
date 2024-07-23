@@ -2,6 +2,16 @@ provider "aws" {
   region = var.aws_region
 }
 
+resource "aws_sns_topic" "drift_alerts" {
+  name = "drift-alerts-${random_string.suffix.result}"
+}
+
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.drift_alerts.arn
+  protocol  = "email"
+  endpoint  = var.alert_email
+}
+
 resource "aws_sns_topic" "test_topic" {
   name = "test-drift-topic-${random_string.topic_suffix.result}"
   tags = {
