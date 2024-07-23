@@ -1,32 +1,24 @@
-import {
-  to = aws_cloudwatch_log_group.drift_logs
-  id = "/terraform/drift-detector"
-}
-
 provider "aws" {
-  region = "us-east-2"
+  region = var.aws_region
 }
 
 resource "aws_s3_bucket" "test_bucket" {
   bucket = "my-test-drift-bucket-${random_string.bucket_suffix.result}"
-
   tags = {
-    Environment = "Test"
-    Project     = "TerraformDriftDetector"
+    Environment = var.environment
+    Project     = var.project_name
   }
 }
 
 resource "aws_s3_bucket_ownership_controls" "test_bucket" {
   bucket = aws_s3_bucket.test_bucket.id
-
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
 resource "aws_s3_bucket_public_access_block" "test_bucket" {
-  bucket = aws_s3_bucket.test_bucket.id
-
+  bucket                  = aws_s3_bucket.test_bucket.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -40,5 +32,5 @@ resource "random_string" "bucket_suffix" {
 }
 
 resource "aws_cloudwatch_log_group" "drift_logs" {
-  name = "/terraform/drift-detector"
+  name = "/terraform/drift-detector-s3"
 }
