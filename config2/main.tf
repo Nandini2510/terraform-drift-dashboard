@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-sns-${random_string.topic_suffix.result}"
+  name = "drift-alerts-sns-oeefebvo"
 }
 
 resource "aws_sns_topic_subscription" "email" {
@@ -13,7 +13,7 @@ resource "aws_sns_topic_subscription" "email" {
 }
 
 resource "aws_sns_topic" "test_topic" {
-  name = "test-drift-topic-${random_string.topic_suffix.result}"
+  name = "test-drift-topic-oeefebvo"
   tags = {
     Environment = var.environment
     Project     = var.project_name

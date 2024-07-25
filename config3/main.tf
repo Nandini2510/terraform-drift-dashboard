@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_cloudwatch_log_group" "test_log_group" {
-  name = "test-drift-log-group-${random_string.log_group_suffix.result}"
+  name = "/terraform/drift-detector-cloudwatch"
   retention_in_days = 1  # Minimize storage to avoid potential costs
 
   tags = {
@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_group" "test_log_group" {
 }
 
 resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-log-${random_string.log_group_suffix.result}"
+  name = "drift-alerts-log-qkvugovd"
 }
 
 resource "aws_sns_topic_subscription" "email" {

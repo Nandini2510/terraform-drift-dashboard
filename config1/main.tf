@@ -1,9 +1,10 @@
+
 provider "aws" {
   region = var.aws_region
 }
 
 resource "aws_s3_bucket" "test_bucket" {
-  bucket = "my-test-drift-bucket-${random_string.bucket_suffix.result}"
+  bucket = "my-test-drift-bucket-9zzw6jez"
   tags = {
     Environment = var.environment
     Project     = var.project_name
@@ -26,7 +27,7 @@ resource "aws_s3_bucket_public_access_block" "test_bucket" {
 }
 
 resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-s3-${random_string.bucket_suffix.result}"
+  name = "drift-alerts-s3-9zzw6jez"
 }
 
 resource "aws_sns_topic_subscription" "email" {
