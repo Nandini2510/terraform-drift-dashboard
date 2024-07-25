@@ -3,12 +3,14 @@ provider "aws" {
 }
 
 resource "aws_cloudwatch_log_group" "test_log_group" {
-  name = "/terraform/drift-detector-cloudwatch"
-  retention_in_days = 1  # Minimize storage to avoid potential costs
-
+  name              = "/terraform/drift-detector-cloudwatch"
+  retention_in_days = 1
   tags = {
     Environment = var.environment
     Project     = var.project_name
+  }
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
