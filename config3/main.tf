@@ -15,7 +15,7 @@ resource "aws_cloudwatch_log_group" "test_log_group" {
 }
 
 resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-log-qkvugovd"
+  name = "drift-alerts-log-${random_string.log_group_suffix.result}"
 }
 
 resource "aws_sns_topic_subscription" "email" {
@@ -30,6 +30,7 @@ resource "random_string" "log_group_suffix" {
   upper   = false
 }
 
-resource "aws_cloudwatch_log_group" "drift_logs" {
-  name = "/terraform/drift-detector-cloudwatch"
-}
+# Remove this duplicate resource
+# resource "aws_cloudwatch_log_group" "drift_logs" {
+#   name = "/terraform/drift-detector-cloudwatch"
+# }
