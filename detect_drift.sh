@@ -6,7 +6,7 @@ for CONFIG in "${CONFIGS[@]}"
 do
     cd "$CONFIG"
     
-    PLAN_OUTPUT=$(terraform plan -detailed-exitcode 2>&1)
+    PLAN_OUTPUT=$(terraform plan -var="alert_email=ynandini0625@gmail.com" -detailed-exitcode 2>&1)
     EXITCODE=$?
     TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
