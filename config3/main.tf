@@ -11,6 +11,7 @@ resource "aws_cloudwatch_log_group" "test_log_group" {
   }
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [retention_in_days]
   }
 }
 
