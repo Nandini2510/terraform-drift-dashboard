@@ -31,6 +31,10 @@ resource "random_string" "log_group_suffix" {
   upper   = false
 }
 
+output "sns_topic_arn" {
+  value = aws_sns_topic.drift_alerts.arn
+}
+
 # Remove this duplicate resource
 # resource "aws_cloudwatch_log_group" "drift_logs" {
 #   name = "/terraform/drift-detector-cloudwatch"

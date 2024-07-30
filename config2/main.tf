@@ -29,3 +29,7 @@ resource "random_string" "topic_suffix" {
 resource "aws_cloudwatch_log_group" "drift_logs" {
   name = "/terraform/drift-detector-sns"
 }
+
+output "sns_topic_arn" {
+  value = aws_sns_topic.drift_alerts.arn
+}

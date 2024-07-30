@@ -30,6 +30,7 @@ resource "aws_sns_topic" "drift_alerts" {
   name = "drift-alerts-s3-9zzw6jez"
 }
 
+
 resource "aws_sns_topic_subscription" "email" {
   topic_arn = aws_sns_topic.drift_alerts.arn
   protocol  = "email"
@@ -44,4 +45,8 @@ resource "random_string" "bucket_suffix" {
 
 resource "aws_cloudwatch_log_group" "drift_logs" {
   name = "/terraform/drift-detector-s3"
+}
+
+output "sns_topic_arn" {
+  value = aws_sns_topic.drift_alerts.arn
 }
