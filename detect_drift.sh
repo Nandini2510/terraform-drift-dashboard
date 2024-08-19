@@ -15,7 +15,7 @@ publish_metric() {
     aws cloudwatch put-metric-data \
     --region us-east-2 \
     --namespace "TerraformDriftDetector" \
-    --metric-name "${CONFIG}DriftStatus" \
+    --metric-name "DriftStatus" \
     --value "$1" \
     --timestamp "$TIMESTAMP" \
     --dimensions Configuration="$CONFIG"
