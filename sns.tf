@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 resource "aws_sns_topic" "drift_alerts" {
   name = "central-drift-alerts-${random_string.sns_suffix.result}"
 }

@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 resource "aws_cloudwatch_metric_alarm" "drift_alarm_s3" {
   alarm_name          = "drift-alarm-s3"
   comparison_operator = "GreaterThanThreshold"

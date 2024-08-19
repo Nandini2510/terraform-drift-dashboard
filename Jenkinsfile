@@ -9,7 +9,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Nandini2510/terraform-drift-dashboard.git'
             }
         }
-         stage('Terraform Init and Apply - SNS') {
+         stage('Terraform Init and Apply - SNS and CloudWatch') {
             steps {
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
