@@ -8,7 +8,7 @@ resource "aws_cloudwatch_metric_alarm" "drift_alarm_s3" {
   statistic           = "Maximum"
   threshold           = "0"
   alarm_description   = "This metric monitors drift in S3 configuration"
-  alarm_actions       = [data.terraform_remote_state.sns.outputs.sns_topic_arn]
+  alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
     Resource       = "S3Bucket"
     Configuration  = "config1"
@@ -25,7 +25,7 @@ resource "aws_cloudwatch_metric_alarm" "drift_alarm_sns" {
   statistic           = "Maximum"
   threshold           = "0"
   alarm_description   = "This metric monitors drift in SNS configuration"
-  alarm_actions       = [data.terraform_remote_state.sns.outputs.sns_topic_arn]
+  alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
     Resource       = "SNSTopic"
     Configuration  = "config2"
@@ -42,10 +42,9 @@ resource "aws_cloudwatch_metric_alarm" "drift_alarm_cloudwatch" {
   statistic           = "Maximum"
   threshold           = "0"
   alarm_description   = "This metric monitors drift in CloudWatch configuration"
-  alarm_actions       = [data.terraform_remote_state.sns.outputs.sns_topic_arn]
+  alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
     Resource       = "CloudWatchLogGroup"
     Configuration  = "config3"
   }
 }
-
