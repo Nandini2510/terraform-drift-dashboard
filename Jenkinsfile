@@ -44,6 +44,20 @@ pipeline {
                 }
             }
         }
+        stage('Create CloudWatch Log Group') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    sh """
+                        export AWS_DEFAULT_REGION=us-east-2
+                        aws logs create-log-group --log-group-name /terraform/drift-detector
+                        aws logs create-log-stream --log-group-name /terraform/drift-detector --log-stream-name drift-logs
+                    """
+                }
+            }
+        }
         stage('Detect Drift') {
             steps {
                 script {
@@ -56,7 +70,7 @@ pipeline {
                             ]) {
                                 sh """
                                     export AWS_DEFAULT_REGION=us-east-2
-                                    bash ${WORKSPACE}/detect_drift.sh ${config}
+                                    bash ${WORKSPACE}/detect_drift.sh ${config} ynandini0625@gmail.com
                                 """
                             }
                         }

@@ -29,8 +29,8 @@ resource "aws_sns_topic" "test_topic" {
 # }
 
 
-resource "random_string" "topic_suffix" {
-  length  = 8
-  special = false
-  upper   = false
-}
+# resource "random_string" "topic_suffix" {
+#   length  = 8
+#   special = false
+#   upper   = false
+# }

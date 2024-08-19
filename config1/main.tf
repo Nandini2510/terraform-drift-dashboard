@@ -41,11 +41,11 @@ resource "aws_cloudwatch_log_group" "drift_logs" {
 #   endpoint  = var.alert_email
 # }
 
-resource "random_string" "bucket_suffix" {
-  length  = 8
-  special = false
-  upper   = false
-}
+# resource "random_string" "bucket_suffix" {
+#   length  = 8
+#   special = false
+#   upper   = false
+# }
 
 # output "sns_topic_arn" {
 #   value = aws_sns_topic.drift_alerts.arn

@@ -1,12 +1,13 @@
 #!/bin/bash
 
 CONFIG=$1
+ALERT_EMAIL=$2
 WORKSPACE=${WORKSPACE:-$(pwd)}
 
 # Change to the correct directory
 cd "${WORKSPACE}/${CONFIG}"
 
-PLAN_OUTPUT=$(terraform plan -detailed-exitcode 2>&1)
+PLAN_OUTPUT=$(terraform plan -var="alert_email=${ALERT_EMAIL}" -detailed-exitcode 2>&1)
 EXITCODE=$?
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
@@ -17,7 +18,7 @@ publish_metric() {
     --metric-name "DriftStatus" \
     --value "$1" \
     --timestamp "$TIMESTAMP" \
-    --dimensions Resource="${RESOURCE_TYPE}",Configuration="$CONFIG"
+    --dimensions Configuration="$CONFIG"
 }
 
 log_drift_status() {
