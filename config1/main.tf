@@ -26,16 +26,20 @@ resource "aws_s3_bucket_public_access_block" "test_bucket" {
   restrict_public_buckets = true
 }
 
-resource "aws_sns_topic" "drift_alerts" {
-  name = "drift-alerts-s3-9zzw6jez"
+resource "aws_cloudwatch_log_group" "drift_logs" {
+  name = "/terraform/drift-detector-s3"
 }
 
+# resource "aws_sns_topic" "drift_alerts" {
+#   name = "drift-alerts-s3-9zzw6jez"
+# }
 
-resource "aws_sns_topic_subscription" "email" {
-  topic_arn = aws_sns_topic.drift_alerts.arn
-  protocol  = "email"
-  endpoint  = var.alert_email
-}
+
+# resource "aws_sns_topic_subscription" "email" {
+#   topic_arn = aws_sns_topic.drift_alerts.arn
+#   protocol  = "email"
+#   endpoint  = var.alert_email
+# }
 
 resource "random_string" "bucket_suffix" {
   length  = 8
@@ -43,10 +47,9 @@ resource "random_string" "bucket_suffix" {
   upper   = false
 }
 
-resource "aws_cloudwatch_log_group" "drift_logs" {
-  name = "/terraform/drift-detector-s3"
-}
+# output "sns_topic_arn" {
+#   value = aws_sns_topic.drift_alerts.arn
+# }
 
-output "sns_topic_arn" {
-  value = aws_sns_topic.drift_alerts.arn
-}
+
+
