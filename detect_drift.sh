@@ -15,7 +15,7 @@ publish_metric() {
     aws cloudwatch put-metric-data \
     --region us-east-2 \
     --namespace "TerraformDriftDetector" \
-    --metric-name "DriftStatus" \
+    --metric-name "${CONFIG}DriftStatus" \
     --value "$1" \
     --timestamp "$TIMESTAMP" \
     --dimensions Configuration="$CONFIG"
@@ -25,7 +25,7 @@ log_drift_status() {
     local message=$1
     aws logs put-log-events \
     --log-group-name "/terraform/drift-detector" \
-    --log-stream-name "drift-logs" \
+    --log-stream-name "${CONFIG}-drift-logs" \
     --log-events timestamp=$(date +%s000),message="$message"
 }
 

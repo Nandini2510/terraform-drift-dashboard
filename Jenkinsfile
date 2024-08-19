@@ -44,7 +44,7 @@ pipeline {
                 }
             }
         }
-        stage('Create CloudWatch Log Group') {
+        stage('Create CloudWatch Log Group and Streams') {
             steps {
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
@@ -53,7 +53,9 @@ pipeline {
                     sh """
                         export AWS_DEFAULT_REGION=us-east-2
                         aws logs create-log-group --log-group-name /terraform/drift-detector
-                        aws logs create-log-stream --log-group-name /terraform/drift-detector --log-stream-name drift-logs
+                        aws logs create-log-stream --log-group-name /terraform/drift-detector --log-stream-name config1-drift-logs
+                        aws logs create-log-stream --log-group-name /terraform/drift-detector --log-stream-name config2-drift-logs
+                        aws logs create-log-stream --log-group-name /terraform/drift-detector --log-stream-name config3-drift-logs
                     """
                 }
             }

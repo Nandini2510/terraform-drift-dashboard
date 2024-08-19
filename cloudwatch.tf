@@ -1,50 +1,47 @@
-resource "aws_cloudwatch_metric_alarm" "drift_alarm_s3" {
-  alarm_name          = "drift-alarm-s3"
+resource "aws_cloudwatch_metric_alarm" "drift_alarm_config1" {
+  alarm_name          = "drift-alarm-config1"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DriftStatus"
   namespace           = "TerraformDriftDetector"
-  period              = "60"
+  period              = "300"
   statistic           = "Maximum"
   threshold           = "0"
-  alarm_description   = "This metric monitors drift in S3 configuration"
+  alarm_description   = "This metric monitors drift in config1"
   alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
-    Resource       = "S3Bucket"
-    Configuration  = "config1"
+    Configuration = "config1"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "drift_alarm_sns" {
-  alarm_name          = "drift-alarm-sns"
+resource "aws_cloudwatch_metric_alarm" "drift_alarm_config2" {
+  alarm_name          = "drift-alarm-config2"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DriftStatus"
   namespace           = "TerraformDriftDetector"
-  period              = "60"
+  period              = "300"
   statistic           = "Maximum"
   threshold           = "0"
-  alarm_description   = "This metric monitors drift in SNS configuration"
+  alarm_description   = "This metric monitors drift in config2"
   alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
-    Resource       = "SNSTopic"
-    Configuration  = "config2"
+    Configuration = "config2"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "drift_alarm_cloudwatch" {
-  alarm_name          = "drift-alarm-cloudwatch"
+resource "aws_cloudwatch_metric_alarm" "drift_alarm_config3" {
+  alarm_name          = "drift-alarm-config3"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DriftStatus"
   namespace           = "TerraformDriftDetector"
-  period              = "60"
+  period              = "300"
   statistic           = "Maximum"
   threshold           = "0"
-  alarm_description   = "This metric monitors drift in CloudWatch configuration"
+  alarm_description   = "This metric monitors drift in config3"
   alarm_actions       = [aws_sns_topic.drift_alerts.arn]
   dimensions = {
-    Resource       = "CloudWatchLogGroup"
-    Configuration  = "config3"
+    Configuration = "config3"
   }
 }
