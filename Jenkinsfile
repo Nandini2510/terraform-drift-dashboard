@@ -9,19 +9,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Nandini2510/terraform-drift-dashboard.git'
             }
         }
-        stage('Terraform Init and Apply - SNS') {
+         stage('Terraform Init and Apply - SNS') {
             steps {
-                dir('sns') {
-                    withCredentials([
-                        string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
-                        string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
-                    ]) {
-                        sh """
-                            export AWS_DEFAULT_REGION=us-east-2
-                            terraform init
-                            terraform apply -auto-approve -var="alert_email=ynandini0625@gmail.com"
-                        """
-                    }
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    sh """
+                        export AWS_DEFAULT_REGION=us-east-2
+                        terraform init
+                        terraform apply -auto-approve -var="alert_email=ynandini0625@gmail.com"
+                    """
                 }
             }
         }
