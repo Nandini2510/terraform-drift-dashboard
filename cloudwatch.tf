@@ -49,9 +49,3 @@ resource "aws_cloudwatch_metric_alarm" "drift_alarm_cloudwatch" {
   }
 }
 
-data "terraform_remote_state" "sns" {
-  backend = "local"
-  config = {
-    path = "${path.module}/terraform.tfstate"
-  }
-}

@@ -1,4 +1,4 @@
 variable "alert_email" {
-  description = "Email address for drift alerts"
-  type        = string
+  type    = string
+  default = "ynandini0625@gmail.com"
 }
