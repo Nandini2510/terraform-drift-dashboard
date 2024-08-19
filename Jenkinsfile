@@ -9,7 +9,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Nandini2510/terraform-drift-dashboard.git'
             }
         }
-         stage('Terraform Init and Apply') {
+        stage('Terraform Init and Apply') {
             steps {
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
@@ -36,7 +36,7 @@ pipeline {
                                 sh """
                                     export AWS_DEFAULT_REGION=us-east-2
                                     terraform init
-                                    terraform apply -auto-approve
+                                    terraform apply -auto-approve -var="alert_email=ynandini0625@gmail.com"
                                 """
                             }
                         }
@@ -56,7 +56,6 @@ pipeline {
                             ]) {
                                 sh """
                                     export AWS_DEFAULT_REGION=us-east-2
-                                    export RESOURCE_TYPE=${getResourceType(config)}
                                     bash ${WORKSPACE}/detect_drift.sh ${config}
                                 """
                             }
